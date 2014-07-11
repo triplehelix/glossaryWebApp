@@ -1,0 +1,8 @@
+CREATE TABLE `words`(
+	words_id INT NOT NULL AUTO_INCREMENT,
+	word VARCHAR(128) NOT NULL,
+	definition VARCHAR(1024),
+	notes VARCHAR(1024),
+	project_id INT,
+	PRIMARY KEY (words_id)
+	);

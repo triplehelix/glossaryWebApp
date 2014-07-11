@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Glossary WebApplication</title>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="./css/main.css" rel="stylesheet" />
+	<link href="./css/loading.css" rel="stylesheet" />
+</head>
+<body onload="start()">
+	<!-- Wrapper -->
+	<div class="wrapper">
+		<div id="top" class="row">
+			<div id="search" class="col-xs-6">
+				<div class="input-group">
+					<input type="search" class="form-control" placeholder="Search Words"/>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" onclick=";"><span class="glyphicon glyphicon-search"></span></button>	
+					</span>
+				</div>
+			</div>
+			<div id="projects" class="col-xs-6">
+				<select class="form-control">
+					
+				</select>
+			</div>
+		</div> <!-- /top Row -->
+		<div id="main" class="row">
+			<div id="words" class="col-xs-6 col-md-4">
+				<div id="wordsWindow" class="panel panel-default">
+					<div class="panel-heading">Words:</div>
+					<table id="wordsTable" class="table table-striped">
+					</table>
+				</div>
+			</div>
+			<div id="defNotes" class="col-xs-12 col-md-8">
+				<div id="defWindow" class="panel panel-default">
+					<div class="panel-heading">Definition:</div>
+					<div id="defText" class="panel-body">Select a Word to see a Definition.</div>
+				</div>
+				<div id="notesWindow" class="panel panel-default">
+					<div class="panel-heading">Notes:</div>
+					<div id="notesText" class="panel-body">Select a Word to see your notes</div>
+				</div>
+			</div>
+		</div> <!-- /Main Row -->
+		<div id="bottom" class="row">
+			<div id="editWords" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Edit Word</button></div>
+			<div id="addWords" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Add Word</button></div>
+			<div id="editProjects" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Edit Project</button></div>
+			<div id="addProjects" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Add Project</button></div>
+		</div> <!-- /bottom Row -->
+	</div> <!-- /Wrapper -->
+	<div class="modal"></div> <!-- Loading dummy object -->
+<!-- Javascript entries -->
+<script src="http://code.jquery.com/jquery-latest.min.js "></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="./js/ajaxFunctions.js"></script>
+
+</body>
+</html>

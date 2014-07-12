@@ -26,44 +26,29 @@ function start() {
 		}
 		unLockUI();		
 	})
+	//get projects
 	
-//	xmlhttp.open("GET","./GetWords",true);
-//	xmlhttp.send("param=" + JSON.stringify(params));
-//	var xmlDoc = null;
-//	xmlhttp.onreadystatechange = function() {
-//		console.log(xmlhttp.readyState);
-//		if(xmlhttp.readyState != 4) return;
-//		if(xmlhttp.status != 200){
-//			console.log("xmlRequest Failed with code: " + xmlhttp.status);
-//			return;
-//		}
-//		JSONDoc= JSON.parse(xmlhttp.responseText);
-//		if(!JSONDoc || typeof JSONDoc === 'undefined'){
-//			console.log("ERROR: JSONDoc is null");
-//			return;
-//		}
-//		var wordArray=JSONDoc.wordList; //array of jsonstrings
-//		console.log("wordArray[0]: " + wordArray[0]);
-//		for (i=0;i<wordArray.length;i++)
-//		  {
-//			
-//		  }
-//		unLockUI();
-//		
-//	}
+	//TODO move unLockUI() down here.
 }
 
-function selectWord(specificWordPath){
-	console.log("selectWord() called");
-	
+/*
+ * function used to load specific words based on project selection
+ */
+function loadWords(project_id){
 	
 }
 
+/*
+ * UI responsiveness function to stop input from user while ajax is working
+ */
 function lockUI(){
 	console.log("Locking UI");
 	$("body").addClass("loading");
 }
 
+/*
+ * unlocks input from user initiated by lockUI()
+ */
 function unLockUI(){
 	console.log("Unlocking UI");
 	$("body").removeClass("loading");

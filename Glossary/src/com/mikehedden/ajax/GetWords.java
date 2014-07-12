@@ -42,7 +42,8 @@ public class GetWords extends HttpServlet {
 		 *     3: output JSON object with JSON array
 		*/
 		//parameters
-		String requestString = request.getParameter("param");
+		String requestString = request.getParameter("params");
+		System.out.println("DEBUG: requestString = " + requestString);
 		int projectId = -1;
 		if(request != null){
 			try {

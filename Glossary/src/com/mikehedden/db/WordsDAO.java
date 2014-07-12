@@ -46,7 +46,7 @@ public class WordsDAO {
 				rs = ps.executeQuery();
 				if(rs != null){
 					while(rs.next()){
-						Word currentWord = new Word(rs.getInt("word_id"), rs.getInt("project_id"),
+						Word currentWord = new Word(rs.getInt("words_id"), rs.getInt("project_id"),
 								rs.getString("word"), rs.getString("definition"), rs.getString("notes"));
 						wordList.add(currentWord);
 					}

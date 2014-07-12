@@ -1,3 +1,9 @@
+/*
+ * Words Data Access Object
+ * by: Mike Hedden
+ * Date: 2014-07-11
+ */
+
 package com.mikehedden.db;
 
 import java.sql.Connection;
@@ -20,7 +26,7 @@ public class WordsDAO {
 		conn = dbConn.getConnection();
 		if(projectId >= 0){
 			//use inputed projectID
-			String sql = "SELECT * FROM `words` WHERE project_id=?;";
+			String sql = "SELECT * FROM `words` WHERE project_id=? ORDER BY `word` ASC;";
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, projectId);
@@ -40,7 +46,7 @@ public class WordsDAO {
 			
 		}else{
 			//no projectID specified, display all
-			String sql = "SELECT * FROM `words`;";
+			String sql = "SELECT * FROM `words` ORDER BY `word` ASC;";
 			try {
 				ps = conn.prepareStatement(sql);
 				rs = ps.executeQuery();

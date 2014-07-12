@@ -17,9 +17,13 @@ function start() {
 	lockUI();
 	$.get('./GetWords', 'params=' + paramsString, function(data){
 		console.log("response: " + data);
-		var wordArray=data.wordList; //array of jsonstrings
-		console.log("wordArray[0]: " + wordArray[0]);
-		//TODO output words in table
+		var JSONobj = JSON.parse(data); 
+		var wordArray = JSONobj.wordList;//array of jsonstrings
+		if(JSONobj.error == false){
+			outputWords(wordArray);
+		}else{
+			console.log("ERROR: " + JSONobj.errorMsg);
+		}
 		unLockUI();		
 	})
 	

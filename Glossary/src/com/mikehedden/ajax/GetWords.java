@@ -41,20 +41,21 @@ public class GetWords extends HttpServlet {
 		 * 	   2: make into JSON array
 		 *     3: output JSON object with JSON array
 		*/
+		boolean error = false;
+		String errorMsg = "";
 		//parameters
 		String requestString = request.getParameter("params");
-		System.out.println("DEBUG: requestString = " + requestString);
 		int projectId = -1;
-		if(request != null){
+		if(requestString != null){
 			try {
 				JSONObject param =  (JSONObject) new JSONParser().parse(requestString);
 				projectId = Integer.parseInt(param.get("project_id").toString());				
 			} catch (ParseException e) {
+				error = true;
+				errorMsg = "Error setting projectId parameter.";
 				e.printStackTrace();
 			}
 		}
-		boolean error = false;
-		String errorMsg = "";
 		
 		//Step 1:
 		WordsDAO word = new WordsDAO();

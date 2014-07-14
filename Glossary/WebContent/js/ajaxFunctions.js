@@ -38,6 +38,14 @@ function loadWords(project_id){
 	
 }
 
+function addWordAJAX(wordObj){
+	
+}
+
+function editWordAJAX(wordObj){
+	
+}
+
 /*
  * UI responsiveness function to stop input from user while ajax is working
  */

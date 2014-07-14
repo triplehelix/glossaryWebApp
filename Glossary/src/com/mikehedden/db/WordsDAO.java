@@ -66,8 +66,31 @@ public class WordsDAO {
 		return wordList;
 	}
 	
-	public boolean insertWord(){
-		//TODO
+	public boolean insertWord(Word insertWord){
+		boolean error = true;
+		String sql = "INSERT INTO `words` " + 
+						"(word, definition, notes, project_id) " +
+						"VALUES (?,?,?,?);";
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, insertWord.getWord());
+			ps.setString(2, insertWord.getDefinition());
+			ps.setString(3, insertWord.getNotes());
+			ps.setInt(4, insertWord.getProject_id());
+			ps.execute();
+			error = false;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
+		return !error;
+	}
+	
+	public boolean updateWord(){
+		//TODO 
 		
 		return false;
 	}

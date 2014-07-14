@@ -47,3 +47,35 @@ function loadWord(word_id){
 	}
 	
 }
+
+/*
+ * function to create UI popup with form to add word. Then send to AJAX function to 
+ * add the word to database.
+ */
+function addWord(){
+	
+}
+
+/*
+ * function to create UI popup with form to edit word. Then send to AJAX function to 
+ * edit the word in database.
+ */
+function editWord(){
+	
+}
+
+/*
+ * function to create UI popup with form to edit project. Then send to AJAX function to 
+ * edit the project in database.
+ */
+function editProject(){
+	
+}
+
+/*
+ * function to create UI popup with form to add project. Then send to AJAX function to 
+ * add the project to database.
+ */
+function addProject(){
+	
+}

@@ -5,6 +5,7 @@
  var wordsArray_g;
  var isSetWordsArray_g = false;
  var selectedWord_g = -1;
+ var selectedProject_g = -1;
 /*
  * wordsArray is an array of JSONObjects. 
  * Here is an example of an entry:
@@ -18,15 +19,23 @@ function outputWords(wordsArray){
 	var outString= "";
 	//Load each row 1 at a time
 	for(i = 0; i < wordsArray.length; i++){
-		console.log("debug: " + wordsArray[i]); //TODO remove
 		var wordObj = JSON.parse(wordsArray[i]);
-		console.log("debug: " + wordObj.word);
 		outString += "<tr><td onclick=\"loadWord(" + wordObj.word_id + ");\">" +
 					wordObj.word + 
 					"</td></tr>";
 	}	
 	//output to html
 	$("#wordsTable").html(outString);
+}
+
+/*
+ * function used to populate project dropdown with Projects from database
+ * Each item in project array is a JSONObject containing a name, id, and description
+ * name is displayed in dropdown. id is the values of option, and description pop up is
+ *  activated on hover.
+ */
+function outputProjects(projectArray){
+	console.log("outputProjects() called.")
 }
 
 /*
@@ -53,6 +62,14 @@ function loadWord(word_id){
  * add the word to database.
  */
 function addWord(){
+	console.log("addword() called.");
+	
+}
+
+/*
+ * function used to validate input, create word object, and push to addWordAJAX()
+ */
+function clickAddWord(){
 	
 }
 
@@ -61,7 +78,7 @@ function addWord(){
  * edit the word in database.
  */
 function editWord(){
-	
+	console.log("editword() called.");
 }
 
 /*
@@ -69,7 +86,7 @@ function editWord(){
  * edit the project in database.
  */
 function editProject(){
-	
+	console.log("editProject() called.");
 }
 
 /*
@@ -77,5 +94,5 @@ function editProject(){
  * add the project to database.
  */
 function addProject(){
-	
+	console.log("addProject() called.");
 }

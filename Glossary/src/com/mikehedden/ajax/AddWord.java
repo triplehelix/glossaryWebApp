@@ -31,18 +31,13 @@ public class AddWord extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//using post for this use-case TODO remove if POST works
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
+	@SuppressWarnings("unchecked")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean error = false;
 		String errorMsg = "no error";
+		
 		//Step 1: Handle request parameters
 		String requestString = request.getParameter("params");
 		int project_id = -1;
@@ -53,10 +48,10 @@ public class AddWord extends HttpServlet {
 			try {
 				//TODO create null checks like on definition
 				JSONObject param =  (JSONObject) new JSONParser().parse(requestString);
-				project_id = Integer.parseInt(param.get("project_id").toString());	
-				word = param.get("word").toString();
+				project_id = (param.get("project_id") != null) ? Integer.parseInt(param.get("project_id").toString()) : -2;	
+				word = (param.get("word") != null) ? param.get("word").toString() : null;
 				definition = (param.get("definition") != null) ?  param.get("definition").toString() : null;
-				notes = param.get("notes").toString();
+				notes = (param.get("notes") != null) ? param.get("notes").toString() : null;
 			} catch (ParseException e) {
 				error = true;
 				errorMsg = "Error setting projectId parameter.";
@@ -64,15 +59,21 @@ public class AddWord extends HttpServlet {
 			}
 		}
 		
-		//Setp 2: build into Word object
-		Word newWord = new Word(project_id, word, definition, notes);
-		
-		//Step 3: pass to WordsDAO for insert or update
-		WordsDAO wordsDAO = new WordsDAO();
-		boolean success = wordsDAO.insertWord(newWord);
-		if(!success){
+		if(project_id == -2 || word == null || definition == null || notes == null){
 			error = true;
-			errorMsg = "Failed to insert Into Database";
+			errorMsg = "There was a problem with the form inputs.";
+		}else{
+			
+		//Step 2: build into Word object
+			Word newWord = new Word(project_id, word, definition, notes);
+			
+		//Step 3: pass to WordsDAO for insert or update
+			WordsDAO wordsDAO = new WordsDAO();
+			boolean success = wordsDAO.insertWord(newWord);
+			if(!success){
+				error = true;
+				errorMsg = "Failed to insert Into Database";
+			}
 		}
 		
 		//Step 4: return success or error via JSON.

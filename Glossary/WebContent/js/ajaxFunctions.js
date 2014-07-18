@@ -10,6 +10,13 @@ function start() {
 	loadWords(-1); //preload words with no project
 	loadProjects(); // populate projects dropdown
 	wordsDialogue(); //startup javascript for handling the wordsDialogue
+	projectsDialogue(); //startup javascript for handling the projectsDialogue()
+	$("#wordsTable tr").click(function() {
+	    var selected = $(this).hasClass("highlight");
+	    $("#wordsTable tr").removeClass("highlight");
+	    if(!selected)
+	            $(this).addClass("highlight");
+	});
 }
 
 /*
@@ -45,7 +52,6 @@ function addWordAJAX(wordObj){
 	lockUI();
 	$.post('./AddWord', 'params=' + paramsString, function(data){
 		var JSONobj = JSON.parse(data); 
-		var wordArray = JSONobj.wordList;//array of jsonstrings
 		if(JSONobj.error == false){
 			//success reload words
 			loadWords(selectedProject_g);
@@ -53,7 +59,32 @@ function addWordAJAX(wordObj){
 			//TODO display error popup
 			alert("ERROR inserting word");
 			console.log("ERROR: " + JSONobj.errorMsg);
-			loadWords(selectedProject_g);
+			//loadWords(selectedProject_g);
+		}
+		unLockUI();		
+	});
+}
+
+/*
+ * function used to add a project to the database
+ * example projectObj object:
+ * {} TODO
+ */
+function addProjectAJAX(projectObj){
+	console.log("addProjectAJAX() called.");
+	xmlhttp = initXmlHTTP();
+	var paramsString = JSON.stringify(projectObj);
+	lockUI();
+	$.post('./AddProject', 'params=' + paramsString, function(data){
+		var JSONobj = JSON.parse(data); 
+		if(JSONobj.error == false){
+			//success reload projects
+			loadProjects();
+		}else{
+			//TODO display error popup
+			alert("ERROR inserting word");
+			console.log("ERROR: " + JSONobj.errorMsg);
+			loadProjects(); //TODO not needed?
 		}
 		unLockUI();		
 	});

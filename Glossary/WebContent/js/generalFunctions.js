@@ -2,12 +2,12 @@
  *  By: Mike Hedden
  *  Date: 2014-07-11  
  */
- var wordsArray_g;
+ var wordsArray_g; //jsonarray of jsonobjs
  var isSetWordsArray_g = false;
- var projectsArray_g;
+ var projectsArray_g; //jsonarray of jsonobjs
  var isSetProjectsArray_g = false;
- var selectedWord_g = -1;
- var selectedProject_g = -1;
+ var selectedWord_g = -1; //word_id
+ var selectedProject_g = -1; //project_id
 /*
  * wordsArray is an array of JSONObjects. 
  * Here is an example of an entry:
@@ -77,9 +77,16 @@ function loadWord(word_id){
  * function to create UI popup with form to add word. Then send to AJAX function to 
  * add the word to database.
  */
-function addWord(wordObj){
+function addWord(wordObj){ //TODO replace and remove
 	console.log("addword() called.");
+	console.log("db: project_id = " + wordObj.project_id);
 	addWordAJAX(wordObj);
+}
+
+//TODO replace and remove
+function addProject(projectObj){
+	console.log("addproject() called.");
+	addProjectAJAX(projectObj);
 }
 
 function wordsDialogue(){
@@ -90,7 +97,7 @@ function wordsDialogue(){
 	      word = $( "input#word" ),
 	      description = $( "textarea#description" ),
 	      notes = $( "textarea#notes" ),
-	      project = $( "#popupProjectsDropdown option:selected" ),
+	      project = $( "#popupProjectsDropdown" ),
 	      allFields = $( [] ).add( word ).add( description ).add( notes ),
 	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val() };
 		  
@@ -132,6 +139,61 @@ function wordsDialogue(){
 	 
 	    $( "#addWords" ).on( "click", function() {
 	      dialog.dialog( "open" );
+	    });
+	  });
+}
+
+/*
+ * Function used to display and handle pop-up form for projects
+ */
+function projectsDialogue(){
+	$(function() {
+	    var dialogP, formP,
+	      // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+	      //emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+	      project = $( "input#project" ),
+	      projectDescription = $( "textarea#projectDescription" ),
+	      allFieldsP = $( [] ).add( word ).add( description ).add( notes ),
+	      projectObj = { project: project.val(), description: projectDescription.val() };
+		  
+	    function addTheProject() {
+	      var valid = true;
+	      projectObj = { project: project.val(), description: projectDescription.val() };
+	      allFieldsP.removeClass( "ui-state-error" );
+	 
+	      // TODO validate if necessary
+	      
+	      if ( valid ) {
+	    	addProjectAJAX(projectObj);
+	        dialogP.dialog( "close" );
+	      }
+	      return valid;
+	    }
+	 
+	    dialogP = $( "div#dialog-project" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 450,
+	      modal: true,
+	      buttons: {
+	        "Add Project": addTheProject,
+	        Cancel: function() {
+	          dialogP.dialog( "close" );
+	        }
+	      },
+	      close: function() {
+	        formP[ 0 ].reset();
+	        allFieldsP.removeClass( "ui-state-error" );
+	      }
+	    });
+	 
+	    formP = dialogP.find( "form" ).on( "submit", function( eventP ) {
+	      eventP.preventDefault();
+	      addTheProject();
+	    });
+	 
+	    $( "#addProjects" ).on( "click", function() {
+	      dialogP.dialog( "open" );
 	    });
 	  });
 }

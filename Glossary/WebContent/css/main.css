@@ -24,7 +24,9 @@ div#bottom div#editProjects{ text-align: center; }
 div#bottom div#addProjects{ text-align: center; }
 div#bottom button.btn{width: 90%; }
 
-/* functions for add word form */
+.highlight { background-color: #0000aa; }
+
+/* functions for pop-up form dialogue */
 label, input { display:block; }
 input.text { margin-bottom:12px; width:95%; padding: .4em; }
 fieldset { padding:0; border:0; margin-top:25px; }

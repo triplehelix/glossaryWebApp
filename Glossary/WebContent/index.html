@@ -19,19 +19,32 @@
 	    <fieldset>
 	      <label for="word">Word:</label>
 	      <input type="text" name="word" id="word" placeholder="Glossary" class="text ui-widget-content ui-corner-all">
-	      <label for="desc">Description:</label>
+	      <label for="desc">Definition:</label>
 	      <textarea rows="4" cols="40" name="description" id="description" placeholder="A collection of..."></textarea>
-	      <!--  <input type="text" name="desc" id="desc" value="A collection of..." class="text ui-widget-content ui-corner-all"> -->
 	      <label for="notes">Notes:</label>
 	      <textarea rows="4" cols="40" name="notes" id="notes" placeholder="Notes specific to this project..."></textarea>
-	      <!-- <input type="text" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all"> -->
-	 	  <select class="form-control" class="projectsDropdown" id="popupProjectsDropdown"></select>
+	      <select class="form-control" class="projectsDropdown" id="popupProjectsDropdown"></select>
 	      <!-- Allow form submission with keyboard without duplicating the dialog button -->
 	      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	    </fieldset>
 	  </form>
 	</div>
 	<!-- /Add Word Dialogue -->
+	<!--  Add Project Dialogue -->
+	<div id="dialog-project" title="Create new Project Entry">
+	  <p class="validateTips">All form fields are required.</p>
+	 
+	  <form>
+	    <fieldset>
+	      <label for="project">Project Name:</label>
+	      <input type="text" name="word" id="project" placeholder="ToDoManager" class="text ui-widget-content ui-corner-all">
+	      <label for="Pdesc">Project Description:</label>
+	      <textarea rows="4" cols="40" name="Pdesc" id="projectDescription" placeholder="A tool used to..."></textarea>
+	      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+	    </fieldset>
+	  </form>
+	</div>
+	<!-- /Add Project Dialogue -->
 	<h1>GLOSSARY</h1><br />
 		<div id="top" class="row">
 			<div id="search" class="col-xs-6">
@@ -68,9 +81,9 @@
 		</div> <!-- /Main Row -->
 		<div id="bottom" class="row">
 			<div id="editWords" class="col-xs-3"><button type="button" class="btn btn-default" onclick="editWord();">Edit Word</button></div>
-			<div id="addWords" class="col-xs-3"><button type="button" class="btn btn-default" onclick="wordsDialogue();">Add Word</button></div>
+			<div id="addWords" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Add Word</button></div>
 			<div id="editProjects" class="col-xs-3"><button type="button" class="btn btn-default" onclick="editProject();">Edit Project</button></div>
-			<div id="addProjects" class="col-xs-3"><button type="button" class="btn btn-default" onclick="addProject();">Add Project</button></div>
+			<div id="addProjects" class="col-xs-3"><button type="button" class="btn btn-default" onclick=";">Add Project</button></div>
 		</div> <!-- /bottom Row -->
 	</div> <!-- /Wrapper -->
 	<div class="modal"></div> <!-- Loading dummy object -->

@@ -37,10 +37,25 @@ public class ProjectsDAO {
 		return projectList;
 	}
 	
-	public boolean insertProject(){
-		//TODO
-		
-		return false;
+	public boolean insertProject(Project p){
+		boolean success = false;
+		String sql = "INSERT INTO `projects` " + 
+						"(project_name, project_description) " +
+						"VALUES (?,?);";
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p.getProject_name());
+			ps.setString(2, p.getProject_description());
+			ps.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
+		return success;
 	}
 	
 	public void destroy(){

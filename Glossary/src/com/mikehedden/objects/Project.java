@@ -14,6 +14,13 @@ public class Project {
 		this.project_description = project_description;
 	}
 	
+	public Project(String project_name,
+			String project_description) {
+		super();
+		this.project_name = project_name;
+		this.project_description = project_description;
+	}
+	
 	public String toJSONString(){
 		JSONObject obj = new JSONObject();
 		obj.put("project_id", getProject_id());

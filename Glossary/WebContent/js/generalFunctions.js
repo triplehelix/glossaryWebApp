@@ -4,6 +4,8 @@
  */
  var wordsArray_g;
  var isSetWordsArray_g = false;
+ var projectsArray_g;
+ var isSetProjectsArray_g = false;
  var selectedWord_g = -1;
  var selectedProject_g = -1;
 /*
@@ -13,7 +15,7 @@
  */
 function outputWords(wordsArray){
 	console.log("outputWords() called.");
-	wordsArray_g = wordsArray; //bad programming I know :(
+	wordsArray_g = wordsArray; //bad coupling I know :(
 	isSetWordsArray_g = true;
 	
 	var outString= "";
@@ -34,8 +36,22 @@ function outputWords(wordsArray){
  * name is displayed in dropdown. id is the values of option, and description pop up is
  *  activated on hover.
  */
-function outputProjects(projectArray){
+function outputProjects(projectsArray){
 	console.log("outputProjects() called.")
+	projectsArray_g = projectsArray;
+	isSetProjectsArray_g = true;
+	
+	var outString = "<option value=\"-1\">General Words</option>";
+	//Load each project one at a time into dropdown
+	for(i = 0; i < projectsArray.length; i++){
+		var projectObj = JSON.parse(projectsArray[i]);
+		outString += "<option value=\"" + projectObj.project_id + "\">" + projectObj.project_name + "</option>";
+	}
+	
+	//output to html
+	$("#popupProjectsDropdown").html(outString);
+	$("#mainProjectsDropdown").html(outString);
+	
 }
 
 /*
@@ -61,16 +77,63 @@ function loadWord(word_id){
  * function to create UI popup with form to add word. Then send to AJAX function to 
  * add the word to database.
  */
-function addWord(){
+function addWord(wordObj){
 	console.log("addword() called.");
-	
+	addWordAJAX(wordObj);
 }
 
-/*
- * function used to validate input, create word object, and push to addWordAJAX()
- */
-function clickAddWord(){
-	
+function wordsDialogue(){
+	$(function() {
+	    var dialog, form,
+	      // From http://www.whatwg.org/specs/web-apps/current-work/multipage/states-of-the-type-attribute.html#e-mail-state-%28type=email%29
+	      emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+	      word = $( "input#word" ),
+	      description = $( "textarea#description" ),
+	      notes = $( "textarea#notes" ),
+	      project = $( "#popupProjectsDropdown option:selected" ),
+	      allFields = $( [] ).add( word ).add( description ).add( notes ),
+	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val() };
+		  
+	    function addTheWord() {
+	      var valid = true;
+	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val() }
+	      allFields.removeClass( "ui-state-error" );
+	 
+	      // TODO validate if necessary
+	      
+	      if ( valid ) {
+	        addWord(wordObj);
+	        dialog.dialog( "close" );
+	      }
+	      return valid;
+	    }
+	 
+	    dialog = $( "#dialog-word" ).dialog({
+	      autoOpen: false,
+	      height: 400,
+	      width: 450,
+	      modal: true,
+	      buttons: {
+	        "Add Word": addTheWord,
+	        Cancel: function() {
+	          dialog.dialog( "close" );
+	        }
+	      },
+	      close: function() {
+	        form[ 0 ].reset();
+	        allFields.removeClass( "ui-state-error" );
+	      }
+	    });
+	 
+	    form = dialog.find( "form" ).on( "submit", function( event ) {
+	      event.preventDefault();
+	      addTheWord();
+	    });
+	 
+	    $( "#addWords" ).on( "click", function() {
+	      dialog.dialog( "open" );
+	    });
+	  });
 }
 
 /*

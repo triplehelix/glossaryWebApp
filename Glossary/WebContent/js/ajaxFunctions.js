@@ -9,6 +9,7 @@ function start() {
 	console.log("start() called");
 	loadWords(-1); //preload words with no project
 	loadProjects(); // populate projects dropdown
+	wordsDialogue(); //startup javascript for handling the wordsDialogue
 }
 
 /*
@@ -29,7 +30,7 @@ function loadWords(project_id){
 			console.log("ERROR: " + JSONobj.errorMsg);
 		}
 		unLockUI();		
-	})
+	});
 }
 
 /*
@@ -55,7 +56,7 @@ function addWordAJAX(wordObj){
 			loadWords(selectedProject_g);
 		}
 		unLockUI();		
-	})
+	});
 }
 
 function editWordAJAX(wordObj){
@@ -64,7 +65,18 @@ function editWordAJAX(wordObj){
 
 function loadProjects(){
 	console.log("loadProjects()");
-	//TODO
+	xmlhttp = initXmlHTTP();
+	lockUI();
+	$.get('./GetProjects', function(data){
+		var JSONobj = JSON.parse(data); 
+		var projectArray = JSONobj.projectList;//array of jsonstrings
+		if(JSONobj.error == false){
+			outputProjects(projectArray);
+		}else{
+			console.log("ERROR: " + JSONobj.errorMsg);
+		}
+		unLockUI();		
+	});
 	
 }
 

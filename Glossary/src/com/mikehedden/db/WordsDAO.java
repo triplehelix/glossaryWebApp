@@ -67,7 +67,7 @@ public class WordsDAO {
 	}
 	
 	public boolean insertWord(Word insertWord){
-		boolean error = true;
+		boolean success = false;
 		String sql = "INSERT INTO `words` " + 
 						"(word, definition, notes, project_id) " +
 						"VALUES (?,?,?,?);";
@@ -80,13 +80,13 @@ public class WordsDAO {
 			ps.setString(3, insertWord.getNotes());
 			ps.setInt(4, insertWord.getProject_id());
 			ps.execute();
-			error = false;
+			success = true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
 			destroy();
 		}
-		return !error;
+		return success;
 	}
 	
 	public boolean updateWord(){

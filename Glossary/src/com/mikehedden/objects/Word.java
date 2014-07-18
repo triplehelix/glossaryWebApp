@@ -18,6 +18,15 @@ public class Word {
 		this.notes = notes;
 	}
 	
+	public Word(int project_id, String word, String definition,
+			String notes) {
+		super();
+		this.project_id = project_id;
+		this.word = word;
+		this.definition = definition;
+		this.notes = notes;
+	}
+	
 	public String toJSONString(){
 		JSONObject obj = new JSONObject();
 		obj.put("word_id", getWord_id());

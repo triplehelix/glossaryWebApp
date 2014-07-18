@@ -49,7 +49,7 @@ public class GetWords extends HttpServlet {
 		if(requestString != null){
 			try {
 				JSONObject param =  (JSONObject) new JSONParser().parse(requestString);
-				projectId = Integer.parseInt(param.get("project_id").toString());				
+				projectId = (param.get("project_id") != null) ? Integer.parseInt(param.get("project_id").toString()) : -1;				
 			} catch (ParseException e) {
 				error = true;
 				errorMsg = "Error setting projectId parameter.";

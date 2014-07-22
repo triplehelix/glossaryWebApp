@@ -73,22 +73,6 @@ function loadWord(word_id){
 	
 }
 
-/*
- * function to create UI popup with form to add word. Then send to AJAX function to 
- * add the word to database.
- */
-function addWord(wordObj){ //TODO replace and remove
-	console.log("addword() called.");
-	console.log("db: project_id = " + wordObj.project_id);
-	addWordAJAX(wordObj);
-}
-
-//TODO replace and remove
-function addProject(projectObj){
-	console.log("addproject() called.");
-	addProjectAJAX(projectObj);
-}
-
 function wordsDialogue(){
 	$(function() {
 	    var dialog, form,
@@ -99,17 +83,18 @@ function wordsDialogue(){
 	      notes = $( "textarea#notes" ),
 	      project = $( "#popupProjectsDropdown" ),
 	      allFields = $( [] ).add( word ).add( description ).add( notes ),
-	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val() };
+	      edit = false,
+	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val(), edit: edit };
 		  
 	    function addTheWord() {
 	      var valid = true;
-	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val() }
+	      wordObj = { word: word.val(), definition: description.val(), notes: notes.val(), project_id: project.val(), edit: edit };
 	      allFields.removeClass( "ui-state-error" );
 	 
 	      // TODO validate if necessary
 	      
 	      if ( valid ) {
-	        addWord(wordObj);
+	        addWordAJAX(wordObj);
 	        dialog.dialog( "close" );
 	      }
 	      return valid;
@@ -140,6 +125,32 @@ function wordsDialogue(){
 	    $( "#addWords" ).on( "click", function() {
 	      dialog.dialog( "open" );
 	    });
+	    $( "#editWords" ).on( "click", function() {
+	    	//validate selected word
+	    	if(selectedWord_g == -1){
+	    		alert("Select a word to edit.");
+	    		return;
+	    	}
+	    	dialog.dialog( "open" );	    	
+	    	//populate form fields with current values TODO
+	    	console.log("db: wordsArray_g = " + wordsArray_g); //debug TODO
+	    	var selectedWordArray = wordsArray_g;
+	    	var selectedWord;
+	    	for(i = 0;i<selectedWordArray.length;i++){
+	    		var tmpWord = JSON.parse(selectedWordArray[i]);
+	    		if(tmpWord.word_id == selectedWord_g){
+	    			console.log("db: selectedWord = " + i);
+	    			selectedWord = tmpWord;
+	    			break;
+	    		}
+	    	}
+	    	word.val(selectedWord.word);
+	    	description.val(selectedWord.definition);
+	    	notes.val(selectedWord.notes);
+	    	project.val(selectedWord.project_id);
+	    	edit = true;
+	    	console.log("editWord loaded.");
+	    })
 	  });
 }
 
@@ -212,12 +223,5 @@ function editWord(){
  */
 function editProject(){
 	console.log("editProject() called.");
-}
-
-/*
- * function to create UI popup with form to add project. Then send to AJAX function to 
- * add the project to database.
- */
-function addProject(){
-	console.log("addProject() called.");
+	
 }

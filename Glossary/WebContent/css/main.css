@@ -11,8 +11,9 @@ div#top div#projects{}
 
 div#main{}
 div#main div#words{ height: 400px}
-div#main div#words div#wordsWindow{ height: 400px; overflow-y:auto; overflow-x: hidden}
-div#main div#words div#wordsWindow table#wordsTable{ }
+div#main div#words div#wordsWindow{ height: 400px; }
+div#main div#words div#wordsWindow div#tableWrap{ height: 357px; overflow-y: auto; overflow-x: hidden; }
+div#main div#words div#wordsWindow div#tableWrap table#wordsTable{}
 div#main div#defNotes{}
 div#main div#defNotes div#defWindow{height: 190px;}
 div#main div#defNotes div#notesWindow{height: 190px;}

@@ -89,10 +89,53 @@ public class WordsDAO {
 		return success;
 	}
 	
-	public boolean updateWord(){
-		//TODO 
+	public boolean updateWord(Word updateWord){
+		//TODO test
+		boolean success = false;
+		String sql = "UPDATE `words` " +
+				"SET word=?, " +
+				"definiton=?, " +
+				"notes=?, " + 
+				"project_id=?, "
+				"WHERE word_id=?;";
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, updateWord.getWord());
+			ps.setString(2, updateWord.getDefinition());
+			ps.setString(3, updateWord.getNotes());
+			ps.setInt(4, updateWord.getProject_id());
+			ps.setInt(5, updateWord.getWord_id());
+			ps.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
 		
-		return false;
+		return success;
+	}
+	
+	public boolean deleteWord(Word deleteWord){
+		//TODO test
+		boolean success = false;
+		String sql = "DELETE FROM `words` " +
+				"WHERE word_id=?;";
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, deleteWord.getWord_id());
+			ps.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
+		return success;
 	}
 	
 	public void destroy(){

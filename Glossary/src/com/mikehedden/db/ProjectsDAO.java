@@ -58,6 +58,52 @@ public class ProjectsDAO {
 		return success;
 	}
 	
+	public boolean updateProject(Project p){
+		//TODO test
+		boolean success = false;
+		String sql = "UPDATE `projects` " + 
+				"SET project_name=?, " +
+				"project_description=? "
+				"WHERE project_id=?;";
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, p.getProject_name());
+			ps.setString(2, p.getProject_description());
+			ps.setInt(3, p.getProject_id());
+			ps.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
+		return success;
+	}
+	
+	public boolean deleteProject(Project p){
+		//TODO test
+		boolean success = false;
+		String sql = "DELETE FROM `projects` " + 
+				"WHERE project_id=?;";
+		
+		try {
+			dbConnector dbConn = new dbConnector();
+			conn = dbConn.getConnection();
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, p.getProject_id());
+			ps.execute();
+			success = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			destroy();
+		}
+		
+		return success;
+	}
+	
 	public void destroy(){
 		try {
 			if(rs != null) rs.close();

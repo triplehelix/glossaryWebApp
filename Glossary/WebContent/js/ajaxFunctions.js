@@ -17,6 +17,12 @@ function start() {
 	    if(!selected)
 	            $(this).addClass("highlight");
 	});
+
+    $('select[id="mainProjectsDropdown"]').change(function(){
+        selectedProject_g = $( "#mainProjectsDropdown" ).val();
+        console.log("Selected Project Id: " + selectedProject_g);
+        loadWords(selectedProject_g);
+    });
 }
 
 /*
@@ -82,9 +88,8 @@ function addProjectAJAX(projectObj){
 			loadProjects();
 		}else{
 			//TODO display error popup
-			alert("ERROR inserting word");
+			alert("ERROR inserting Project.");
 			console.log("ERROR: " + JSONobj.errorMsg);
-			loadProjects(); //TODO not needed?
 		}
 		unLockUI();		
 	});
@@ -92,6 +97,83 @@ function addProjectAJAX(projectObj){
 
 function editWordAJAX(wordObj){
 	console.log("editWordAJAX() called.");
+    xmlhttp = initXmlHTTP();
+    var paramsString = JSON.stringify(wordObj);
+    lockUI();
+    $.post('./EditWord', 'params=' + paramsString, function(data){
+        var JSONobj = JSON.parse(data);
+        if(JSONobj.error == false){
+            //success reload words
+            loadWords(selectedProject_g);
+        }else{
+            //TODO display error popup
+            alert("ERROR editing word");
+            console.log("ERROR: " + JSONobj.errorMsg);
+            //loadWords(selectedProject_g);
+        }
+        unLockUI();
+    });
+}
+
+function deleteWordAJAX(wordObj){
+    console.log("deleteWordAJAX() called.");
+    xmlhttp = initXmlHTTP();
+    var paramsString = JSON.stringify(wordObj);
+    lockUI();
+    $.post('./DeleteWord', 'params=' + paramsString, function(data){
+        var JSONobj = JSON.parse(data);
+        if(JSONobj.error == false){
+            //success reload words
+            loadWords(selectedProject_g);
+        }else{
+            //TODO display error popup
+            alert("ERROR deleting word.");
+            console.log("ERROR: " + JSONobj.errorMsg);
+            //loadWords(selectedProject_g);
+        }
+        unLockUI();
+    });
+}
+
+function editProjectAJAX(projectObj){
+    console.log("editProjectAJAX() called.");
+    xmlhttp = initXmlHTTP();
+    var paramsString = JSON.stringify(projectObj);
+    lockUI();
+    $.post('./EditProject', 'params=' + paramsString, function(data){
+        var JSONobj = JSON.parse(data);
+        if(JSONobj.error == false){
+            //success reload projects & words
+            loadProjects();
+            loadWords(selectedProject_g);
+        }else{
+            //TODO display error popup
+            alert("ERROR editing project");
+            console.log("ERROR: " + JSONobj.errorMsg);
+        }
+        unLockUI();
+    });
+}
+
+function deleteProjectAJAX(projectObj){
+    console.log("deleteWordAJAX() called.");
+    xmlhttp = initXmlHTTP();
+    var paramsString = JSON.stringify(projectObj);
+    lockUI();
+    $.post('./DeleteProject', 'params=' + paramsString, function(data){
+        var JSONobj = JSON.parse(data);
+        if(JSONobj.error === false){
+            //success reload all projects and words
+            selectedProject_g = -1;
+            loadProjects();
+            loadWords(selectedProject_g);
+        }else{
+            //TODO display error popup
+            alert("ERROR deleting word.");
+            console.log("ERROR: " + JSONobj.errorMsg);
+        }
+        unLockUI();
+    });
 }
 
 function loadProjects(){
@@ -100,9 +182,10 @@ function loadProjects(){
 	lockUI();
 	$.get('./GetProjects', function(data){
 		var JSONobj = JSON.parse(data); 
-		var projectArray = JSONobj.projectList;//array of jsonstrings
+		var projectArray = JSONobj.projectList; //array of jsonstrings
 		if(JSONobj.error == false){
 			outputProjects(projectArray);
+			console.log("DEBUG: projectArray: " + projectArray);
 		}else{
 			console.log("ERROR: " + JSONobj.errorMsg);
 		}

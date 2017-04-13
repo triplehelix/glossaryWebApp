@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mikehedden.db.WordsDAO;
+import com.mikehedden.objects.Word;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import com.mikehedden.db.WordsDAO;
-import com.mikehedden.objects.Word;
 
 /**
  * Servlet implementation class GetWords

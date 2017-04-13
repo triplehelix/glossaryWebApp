@@ -9,12 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.mikehedden.db.ProjectsDAO;
+import com.mikehedden.objects.Project;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-import com.mikehedden.db.ProjectsDAO;
-import com.mikehedden.objects.Project;
 
 /**
  * Servlet implementation class AddProject
@@ -53,18 +52,24 @@ public class AddProject extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		//Setp 2: build into Word object
-		Project newProject = new Project(project, description);
-		
-		//Step 3: pass to WordsDAO for insert or update
-		ProjectsDAO projectsDAO = new ProjectsDAO();
-		boolean success = projectsDAO.insertProject(newProject);
-		if(!success){
+
+		if(null == project){
 			error = true;
-			errorMsg = "Failed to insert Into Database";
+			errorMsg = "There is no project item in JSON. Without a Project name we cannot insert into DB.";
 		}
-		
+		if(!error) {
+			//Step 2: build into Word object
+			Project newProject = new Project(project, description);
+
+			//Step 3: pass to WordsDAO for insert or update
+			ProjectsDAO projectsDAO = new ProjectsDAO();
+			boolean success = projectsDAO.insertProject(newProject);
+			if (!success) {
+				error = true;
+				errorMsg = "Failed to insert Into Database";
+			}
+		}
+
 		//Step 4: return success or error via JSON.
 		JSONObject obj = new JSONObject();
 		obj.put("error", error);

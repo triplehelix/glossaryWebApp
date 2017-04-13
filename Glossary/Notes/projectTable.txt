@@ -1,4 +1,4 @@
-CREATE TABLE `projects`(
+CREATE TABLE projects(
 	project_id INT NOT NULL AUTO_INCREMENT,
 	project_name VARCHAR(128) NOT NULL,
 	project_description VARCHAR(1024),

@@ -17,34 +17,70 @@
 	 
 	  <form>
 	    <fieldset>
-	      <label for="word">Word:</label>
-	      <input type="text" name="word" id="word" placeholder="Glossary" class="text ui-widget-content ui-corner-all">
-	      <label for="desc">Definition:</label>
-	      <textarea rows="4" cols="40" name="description" id="description" placeholder="A collection of..."></textarea>
-	      <label for="notes">Notes:</label>
-	      <textarea rows="4" cols="40" name="notes" id="notes" placeholder="Notes specific to this project..."></textarea>
-	      <select class="form-control" class="projectsDropdown" id="popupProjectsDropdown"></select>
+	      <label for="word_add">Word:</label>
+	      <input type="text" name="word" id="word_add" placeholder="Glossary" class="text ui-widget-content ui-corner-all">
+	      <label for="description_add">Definition:</label>
+	      <textarea rows="4" cols="40" name="description" id="description_add" placeholder="A collection of..."></textarea>
+	      <label for="notes_add">Notes:</label>
+	      <textarea rows="4" cols="40" name="notes" id="notes_add" placeholder="Notes specific to this project..."></textarea>
+	      <select class="form-control" class="projectsDropdown" id="addWordProjectsDropdown"></select>
 	      <!-- Allow form submission with keyboard without duplicating the dialog button -->
 	      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	    </fieldset>
 	  </form>
 	</div>
 	<!-- /Add Word Dialogue -->
+		<!--  Edit word Dialogue -->
+		<div id="dialog-edit-word" title="Edit Word Entry">
+			<p class="validateTips">All form fields are required.</p>
+
+			<form>
+				<fieldset>
+					<label for="word_edit">Word:</label>
+					<input type="text" name="word" id="word_edit" placeholder="Glossary" class="text ui-widget-content ui-corner-all">
+					<label for="description_edit">Definition:</label>
+					<textarea rows="4" cols="40" name="description" id="description_edit" placeholder="A collection of..."></textarea>
+					<label for="notes_edit">Notes:</label>
+					<textarea rows="4" cols="40" name="notes" id="notes_edit" placeholder="Notes specific to this project..."></textarea>
+					<select class="form-control" class="projectsDropdown" id="editWordProjectsDropdown"></select>
+					<!-- Allow form submission with keyboard without duplicating the dialog button -->
+					<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+				</fieldset>
+			</form>
+		</div>
+		<!-- /Edit Word Dialogue -->
 	<!--  Add Project Dialogue -->
 	<div id="dialog-project" title="Create new Project Entry">
 	  <p class="validateTips">All form fields are required.</p>
 	 
 	  <form>
 	    <fieldset>
-	      <label for="project">Project Name:</label>
-	      <input type="text" name="word" id="project" placeholder="ToDoManager" class="text ui-widget-content ui-corner-all">
-	      <label for="Pdesc">Project Description:</label>
-	      <textarea rows="4" cols="40" name="Pdesc" id="projectDescription" placeholder="A tool used to..."></textarea>
+	      <label for="project_add">Project Name:</label>
+	      <input type="text" name="project" id="project_add" placeholder="ToDoManager" class="text ui-widget-content ui-corner-all">
+	      <label for="projectDescription_add">Project Description:</label>
+	      <textarea rows="4" cols="40" name="Pdesc" id="projectDescription_add" placeholder="A tool used to..."></textarea>
 	      <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
 	    </fieldset>
 	  </form>
 	</div>
 	<!-- /Add Project Dialogue -->
+
+	<!--  Edit Project Dialogue -->
+	<div id="dialog-edit-project" title="Edit Selected Project Entry">
+		<p class="validateTips">All form fields are required.</p>
+
+		<form>
+			<fieldset>
+				<label for="project_edit">Project Name:</label>
+				<input type="text" name="project" id="project_edit" placeholder="ToDoManager" class="text ui-widget-content ui-corner-all">
+				<label for="projectDescription_edit">Project Description:</label>
+				<textarea rows="4" cols="40" name="Pdesc" id="projectDescription_edit" placeholder="A tool used to..."></textarea>
+				<input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+			</fieldset>
+		</form>
+	</div>
+	<!-- /Edit Project Dialogue -->
+
 	<h1>GLOSSARY</h1><br />
 		<div id="top" class="row">
 			<div id="search" class="col-xs-6">

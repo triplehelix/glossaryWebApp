@@ -10,15 +10,20 @@ import com.mikehedden.db.conn.dbConnector;
 import com.mikehedden.objects.Project;
 
 public class ProjectsDAO {
-	Connection conn = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
+	private Connection conn = null;
+	private PreparedStatement ps = null;
+	private ResultSet rs = null;
 	
 	public ArrayList<Project> getProjectList(){
 		ArrayList<Project> projectList = new ArrayList<>();
 		dbConnector dbConn = new dbConnector();
 		conn = dbConn.getConnection();
-		String sql = "SELECT * FROM `projects`;";
+		if(null == conn){
+			// Failed to get connection
+			System.out.println("Failed to get connection to db.");
+			return projectList;
+		}
+		String sql = "SELECT * FROM projects";
 		try {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
@@ -30,7 +35,7 @@ public class ProjectsDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+		    handleSQLException(e, conn);
 		}finally{
 			destroy();
 		}
@@ -38,20 +43,36 @@ public class ProjectsDAO {
 	}
 	
 	public boolean insertProject(Project p){
+	    // Validate Input
+		if (null == p){
+	        return false;
+        }
+
+        String projectName = p.getProject_name();
+	    String projectDescription = p.getProject_description();
+
+		if(null == projectName){
+			System.out.println("Project Name is missing from inserted Project Object. Insert of Project Failed!");
+			return false;
+		}
+
+		// Write SQL
 		boolean success = false;
-		String sql = "INSERT INTO `projects` " + 
+		String sql = "INSERT INTO projects " +
 						"(project_name, project_description) " +
-						"VALUES (?,?);";
+						"VALUES (?,?)";
+
+		// Populate Prepared Statement and execute
 		try {
 			dbConnector dbConn = new dbConnector();
 			conn = dbConn.getConnection();
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, p.getProject_name());
-			ps.setString(2, p.getProject_description());
+			ps.setString(1, projectName);
+			ps.setString(2, projectDescription);
 			ps.execute();
 			success = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+            handleSQLException(e, conn);
 		} finally{
 			destroy();
 		}
@@ -59,12 +80,15 @@ public class ProjectsDAO {
 	}
 	
 	public boolean updateProject(Project p){
+	    if (null == p){
+	        return false;
+        }
 		//TODO test
 		boolean success = false;
-		String sql = "UPDATE `projects` " + 
+		String sql = "UPDATE projects " +
 				"SET project_name=?, " +
-				"project_description=? "
-				"WHERE project_id=?;";
+				"project_description=? " +
+				"WHERE project_id=?";
 		try {
 			dbConnector dbConn = new dbConnector();
 			conn = dbConn.getConnection();
@@ -75,7 +99,7 @@ public class ProjectsDAO {
 			ps.execute();
 			success = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+            handleSQLException(e, conn);
 		} finally{
 			destroy();
 		}
@@ -83,10 +107,14 @@ public class ProjectsDAO {
 	}
 	
 	public boolean deleteProject(Project p){
+
+	    if(null == p){
+	        return false;
+        }
 		//TODO test
 		boolean success = false;
-		String sql = "DELETE FROM `projects` " + 
-				"WHERE project_id=?;";
+		String sql = "DELETE FROM projects " +
+				"WHERE project_id=?";
 		
 		try {
 			dbConnector dbConn = new dbConnector();
@@ -96,7 +124,7 @@ public class ProjectsDAO {
 			ps.execute();
 			success = true;
 		} catch (SQLException e) {
-			e.printStackTrace();
+            handleSQLException(e, conn);
 		} finally{
 			destroy();
 		}
@@ -113,4 +141,17 @@ public class ProjectsDAO {
 			e.printStackTrace();
 		}
 	}
+
+	private void handleSQLException(SQLException e, Connection conn){
+        if(e.getMessage().contains("does not exist")){
+            try {
+                System.out.println("Error Message" + e.getMessage());
+                dbConnector.createTables(conn);
+            } catch (SQLException e2){
+                e2.printStackTrace();
+            }
+        }else {
+            e.printStackTrace();
+        }
+    }
 }

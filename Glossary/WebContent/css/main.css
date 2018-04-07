@@ -15,8 +15,10 @@ div#main div#words div#wordsWindow{ height: 400px; }
 div#main div#words div#wordsWindow div#tableWrap{ height: 357px; overflow-y: auto; overflow-x: hidden; }
 div#main div#words div#wordsWindow div#tableWrap table#wordsTable{}
 div#main div#defNotes{}
-div#main div#defNotes div#defWindow{height: 190px;}
-div#main div#defNotes div#notesWindow{height: 190px;}
+div#main div#defNotes div#defWindow{ height: 190px; }
+div#main div#defNotes div#defWindow div#defText{ height: 134px; overflow-y: scroll }
+div#main div#defNotes div#notesWindow{ height: 190px; }
+div#main div#defNotes div#notesWindow div#notesText{ height: 134px; overflow-y: scroll }
 
 div#bottom{}
 div#bottom div#editWords{ text-align: center; }
